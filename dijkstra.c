@@ -27,15 +27,71 @@ Dijkstra(G, w, s, t) -> G(Graph) é o grafo, w(weight) é o peso das arestas, s(
 21  retorna dist[t]
 
 
+O grafo que será utilizado para fim de execução será este: 
+
+    'A': {'B': 10, 'C': 15, 'D': 20},
+    'B': {'A': 10, 'C': 35, 'D': 25},
+    'C': {'A': 15, 'B': 35, 'D': 30},
+    'D': {'A': 20, 'B': 25, 'C': 30}
+
+
+
+
 */
 
 
 #include <stdio.h> 
 
+int matrizAdjacencia[100][100]; //Grafo 
+int pesoArestas[100][100]; //Peso das arestas
 
+void Dijkstra(int matrizAdjacencia[100][100], int pesoArestas[100][100], int origem, int destino){
+
+    for(int i=0; i<100; i++){
+        for(int j=0; j<100; j++){
+            matrizAdjacencia[i][j] = 0; //Inicialização da variável de matriz de adjacência 
+            pesoArestas[i][j] = 0; //Inicialização da variável de pesos
+        }
+    }
+}
 
 
 int main() {
+
+    int grafo[100][100]; //Grafo
+
+   /* Todas as ligações de A */ 
+    grafo[0][1] = 10;
+    grafo[0][2] = 15;
+    grafo[0][3] = 20; 
+
+   /* Todas as ligações de B */
+   grafo[1][0] = 10; 
+   grafo[1][2] = 35;
+   grafo[1][3] = 25;
+
+    /*  Todas as ligações de C */    
+    grafo[2][0] = 15;
+    grafo[2][1] = 35;
+    grafo[2][3] = 30;
+
+    /* Todas as ligações de D */
+    grafo[3][0] = 20;
+    grafo[3][1] = 25;
+    grafo[3][2] = 30;
+
+
+
+    /* Imprime a matriz de adjacência do grafo */
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++){
+            printf("%d ", grafo[i][j]);
+        }
+        printf("\n");
+    }
+    /* Fim da implementação da impressão da matriz de adjacência */
+
+
     printf("Hello, world!"); 
     return 0; 
 
