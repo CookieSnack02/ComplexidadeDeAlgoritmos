@@ -70,8 +70,41 @@ void Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destin
         naoVisitados[vertice] = 1; 
     }
 
+    while(1){
+        int u = -1; 
+        int menorDistancia = -1; 
 
-    
+            for(int vertice = 0; vertice < ordem; vertice++){
+                if(naoVisitados[vertice] == 1){ //Foi visitada? 
+                    if(distancia[vertice] != -1){ //Consigo chegar nela? 
+                        if(menorDistancia == -1 || distancia[vertice] < menorDistancia){ //Se a menor distancia for a primeira cidade com -1 ou se a distancia do vértice for menor do que a variavel menorDistancia acontece abaixo 
+                            menorDistancia = distancia[vertice];
+                            u = vertice;
+                        }
+                    }
+                }
+            }
+
+            if(u == -1 || distancia[u] == -1 || u == destino)
+                break; 
+            
+            naoVisitados[u] = 0;
+
+            for(int vizinho = 0; vizinho < ordem; vizinho++){
+                if(matrizAdjacencia[u][vizinho] != 0){ //Tem ligação? 
+                    if(naoVisitados[vizinho] == 1){ //Ele não foi visitado? Sim - entra; Não - sai. 
+                        if(distancia[vizinho] == -1 || distancia[u] + matrizAdjacencia[u][vizinho] < distancia[vizinho]){ //É primeiro caminho que achei ou o novo caminho é melhor? 
+                            distancia[vizinho] = distancia[u] + matrizAdjacencia[u][vizinho];
+                            predecessor[vizinho] = u; 
+                        }
+                }
+                }
+
+            }
+    }
+
+
+    return distancia[destino];
 
     
 }
