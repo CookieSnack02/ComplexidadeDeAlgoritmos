@@ -4,7 +4,7 @@
     Abaixo está o pseudocódigo do algoritmo de Dijkstra que será implementado em C Ansi: 
 
 Dijkstra(G, w, s, t) -> G(Graph) é o grafo, w(weight) é o peso das arestas, s(source) é o vértice de origem e t(target) é o destino
- 1  para cada vértice v ∈ V[G] faça
+ 1  para cada vértice v ∈ V[G] faça //Conjunto de todos os vértices do grafo G -> Quantidade de elementos = a ordem do grafo
  2      dist[v] ← ∞
  3      pred[v] ← NIL
  4  dist[s] ← 0
@@ -40,23 +40,49 @@ O grafo que será utilizado para fim de execução será este:
 */
 
 
-#include <stdio.h> 
+#include <stdio.h>
 
 int matrizAdjacencia[100][100]; //Grafo 
-int pesoArestas[100][100]; //Peso das arestas
 
-void Dijkstra(int matrizAdjacencia[100][100], int pesoArestas[100][100], int origem, int destino){
+void Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destino){
 
-    for(int i=0; i<100; i++){
-        for(int j=0; j<100; j++){
+    /* Se comecarmos com a matriz de adjacencia com zero a chamada da funcao main com os valores do grafo e apagada
+    for(int i=0; i<ordem; i++){
+        for(int j=0; j<ordem; j++){
             matrizAdjacencia[i][j] = 0; //Inicialização da variável de matriz de adjacência 
             pesoArestas[i][j] = 0; //Inicialização da variável de pesos
         }
     }
+    */
+    int distancia[100];
+    int predecessor[100];
+    int naoVisitados[100];
+
+    //O -1 significa infinito -> Não conheço nenhum caminho para chegar a este vértice
+    for(int vertice=0; vertice<ordem; vertice++){
+        distancia[vertice] = -1;
+        predecessor[vertice] = 0; 
+        //naoVisitados poderia vir aqui para otimizar o trabalho 
+    }
+    distancia[origem] = 0;
+    
+    for(int vertice=0; vertice<ordem; vertice++){
+        naoVisitados[vertice] = 1; 
+    }
+
+
+    
+
+    
 }
 
 
+
 int main() {
+
+    int ordem; //Ordem do grafo 
+    printf("Digite a ordem do grafo: ");
+    scanf("%d", &ordem); 
 
     int grafo[100][100]; //Grafo
 
@@ -83,16 +109,16 @@ int main() {
 
 
     /* Imprime a matriz de adjacência do grafo */
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++){
+    for(int i=0; i<ordem; i++){
+        for(int j=0; j<ordem; j++){
             printf("%d ", grafo[i][j]);
         }
         printf("\n");
     }
     /* Fim da implementação da impressão da matriz de adjacência */
 
+    
 
-    printf("Hello, world!"); 
     return 0; 
 
 }
