@@ -44,7 +44,7 @@ O grafo que será utilizado para fim de execução será este:
 
 int matrizAdjacencia[100][100]; //Grafo 
 
-void Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destino){
+int Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destino, int predecessor[]){
 
     /* Se comecarmos com a matriz de adjacencia com zero a chamada da funcao main com os valores do grafo e apagada
     for(int i=0; i<ordem; i++){
@@ -55,13 +55,12 @@ void Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destin
     }
     */
     int distancia[100];
-    int predecessor[100];
     int naoVisitados[100];
 
     //O -1 significa infinito -> Não conheço nenhum caminho para chegar a este vértice
     for(int vertice=0; vertice<ordem; vertice++){
         distancia[vertice] = -1;
-        predecessor[vertice] = 0; 
+        predecessor[vertice] = -1; 
         //naoVisitados poderia vir aqui para otimizar o trabalho 
     }
     distancia[origem] = 0;
@@ -109,7 +108,26 @@ void Dijkstra(int ordem, int matrizAdjacencia[100][100],  int origem, int destin
     
 }
 
+void mostrarMenorCaminho(int origem, int destino, int predecessor[]){
+    if (origem == destino) {
+        printf("%d ", origem);
+    } else if (predecessor[destino] == -1) {
+        printf("Nenhum caminho encontrado.");
+    } else {
+        mostrarMenorCaminho(origem, predecessor[destino], predecessor);
+        printf(" -> %d ", destino);
+    }
+}
 
+void menorCaminho(int ordem, int grafo[100][100], int origem, int destino, int predecessor[]){
+    int dist = Dijkstra(ordem, grafo, origem, destino, predecessor);
+    
+    if(dist != -1){
+        printf("%d\n", dist);
+    } else {
+        printf("Inalcancavel (nao existe caminho).\n");
+    }
+}
 
 int main() {
 
@@ -150,7 +168,50 @@ int main() {
     }
     /* Fim da implementação da impressão da matriz de adjacência */
 
-    
+    int opcao = -1; 
+    int destino;
+    int origem; 
+    int predecessor[100];
+
+    while(opcao != 0){
+
+        printf(" \n------ SISTEMA DE GRAFO DIJKSTRA ------\n");
+        printf("1. Selecionar origem\n");
+        printf("2. Selecionar destino\n");
+        printf("3. Mostrar valor do caminho mais curto\n");
+        printf("4. Mostrar trajeto do caminho mais curto\n");
+        printf("0. Desligar sistema\n");
+
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao)
+        {
+        case 1:
+            printf("\nQual é a origem? ");
+            scanf("%d", &origem);
+            break;
+        case 2: 
+            printf("\nQual é o destino? ");
+            scanf("%d", &destino);
+            break;
+
+        case 3: 
+            printf("\nO valor do caminho mais curto: ");
+            menorCaminho(ordem, grafo, origem, destino, predecessor);        
+            break;
+        case 4: 
+            printf("\nO trajeto do caminho mais curto é: ");
+            Dijkstra(ordem, grafo, origem, destino, predecessor); 
+            mostrarMenorCaminho(origem, destino, predecessor);
+        
+        case 0: 
+            break;
+        
+        default:
+            break;
+        }
+    }
 
     return 0; 
 
